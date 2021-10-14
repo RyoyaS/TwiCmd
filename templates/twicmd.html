@@ -1,0 +1,59 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="{%static 'twicmd.css'%}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
+    <title>Twitterコマンド生成ツール</title>
+</head>
+
+
+<body>
+    <header>
+        Twitterコマンド生成ツール
+    </header>
+    <form method="POST">{% csrf_token %}
+        <div class="content">
+            <p>特定のユーザーに関するツイートを検索<input type="text" name="atSign" class="form-control"></p>
+            <p>特定のユーザーからのツイートを検索<input type="text" name="from" class="form-control"></p>
+            <p>特定のユーザー宛のツイートを検索<input type="text" name="to" class="form-control"></p>
+            <p>検索対象を自分がフォローしているアカウントに限定<input type="checkbox" name="follows" value="follows"></p>
+            <p>指定した年月日以降のツイートから検索<input type="date" name="since" class="form-control"></p>
+            <p>指定した年月日までのツイートから検索<input type="date" name="until" class="form-control"></p>
+            <p>画像が含まれたツイートを検索<input type="checkbox" name="images" value="images"></p>
+            <p>リンクを含むツイートのみを検索<input type="checkbox" name="links" value="links"></p>
+            <p>指定した複数のワード全てを含むツイートを検索<input type="text" name="word" class="form-control"></p>
+        </div>
+        <div class="create-btn">
+            <button type="submit" class="btn btn-secondary">作成</button>
+        </div>
+    </form>
+    <div class="cmd">
+        <p>Twitter検索コマンド</p>
+        <input id="twicmd" type="text" value="{{twicmd}}" class="form-control" readonly>
+    </div>
+    <div class="copy-btn">
+        <button onclick="copyToClipboard()" class="btn btn-primary">コピー</button>
+    </div>
+    <div class="twitterLink">
+        <a href="https://twitter.com/home">Twitterへ</a>
+    </div>
+    <script>
+        function copyToClipboard() {
+            var copyTarget = document.getElementById("twicmd");
+            copyTarget.select();
+            document.execCommand("Copy");
+
+            alert("コピーできました！ : " + copyTarget.value);
+        }
+    </script>
+
+
+</body>
+
+</html>
